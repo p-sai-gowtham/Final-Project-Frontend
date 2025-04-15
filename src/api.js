@@ -4,7 +4,6 @@ const API = axios.create({
   baseURL: 'http://127.0.0.1:8000/api',
 });
 
-// Assuming you're using axios
 export const fetchProjects = (limit, offset, sortField, sortOrder, searchTerm, typeFilter, statusFilter) => {
   const params = {
     limit,
@@ -16,7 +15,7 @@ export const fetchProjects = (limit, offset, sortField, sortOrder, searchTerm, t
   }
 
   if (searchTerm) {
-    params.search = searchTerm; // backend should support search query
+    params.search = searchTerm;
   }
   if (typeFilter) {
     params.type = typeFilter;
