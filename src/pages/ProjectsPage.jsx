@@ -8,7 +8,7 @@ import ProjectEditModal from '../components/ProjectEditModal';
 import { fetchProjects, addProject, editProject } from '../api';
 
 const ProjectsPage = () => {
-  const [page, setPage] = useState(0); // 0-indexed
+  const [page, setPage] = useState(0); 
   const [pageSize, setPageSize] = useState(10);
   const [rows, setRows] = useState([]);
   const [rowCount, setRowCount] = useState(0);
@@ -28,7 +28,7 @@ const [searchTerm, setSearchTerm] = useState("");
 
   const loadProjects = React.useCallback(() => {
   const offset = page * pageSize;
-  fetchProjects(pageSize, offset, sortField, sortOrder, searchTerm, typeFilter, statusFilter)  // ✅ pass filters
+  fetchProjects(pageSize, offset, sortField, sortOrder, searchTerm, typeFilter, statusFilter) 
     .then((res) => {
       const mappedProjects = res.data.results.map(project => ({
         ...project,
@@ -43,7 +43,7 @@ const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     loadProjects();
-  }, [loadProjects]); // ⬅️ Trigger when loadProjects changes
+  }, [loadProjects]);
 
   const handleSortChange = (sortModel) => {
     if (sortModel.length > 0) {
@@ -143,7 +143,7 @@ const [searchTerm, setSearchTerm] = useState("");
           setPage={setPage}
           rowCount={rowCount}
           handleEditProject={handleEditProject}
-          handleSortChange={handleSortChange} // 👈 Added this
+          handleSortChange={handleSortChange}
         />
       </Box>
 

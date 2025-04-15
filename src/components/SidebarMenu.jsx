@@ -1,4 +1,3 @@
-// SidebarMenu.jsx
 import React from 'react';
 import { Link } from 'react-router-dom';
 import {
@@ -54,7 +53,6 @@ const SidebarMenu = ({
           </ListItemButton>
         </ListItem>
 
-        {/* Project Management with Internal Projects */}
         <ListItem disablePadding>
           <ListItemButton onClick={() => setOpenProjectManagement(!openProjectManagement)} sx={{ borderRadius: 1 }}>
             <ListItemIcon><BusinessIcon /></ListItemIcon>
@@ -82,10 +80,10 @@ const SidebarMenu = ({
             <Collapse in={openProjects} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
                 <ListItemButton
-      component={Link}
-      to="/projects/internal"
-      sx={{ pl: 4, borderRadius: 1 }}
-    >
+                  component={Link}
+                  to="/projects/internal"
+                  sx={{ pl: 4, borderRadius: 1 }}
+                >
                   <ListItemText primary="Internal Projects" />
                 </ListItemButton>
               </List>

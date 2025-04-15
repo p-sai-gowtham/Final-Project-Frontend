@@ -9,7 +9,7 @@ import { fetchProjects, addProject, editProject } from '../api';
 import { Snackbar, Alert } from '@mui/material';
 
 const InternalProjectsPage = () => {
-  const [page, setPage] = useState(0); // 0-indexed
+  const [page, setPage] = useState(0);
     const [pageSize, setPageSize] = useState(10);
     const [rows, setRows] = useState([]);
     const [rowCount, setRowCount] = useState(0);
@@ -43,7 +43,7 @@ const InternalProjectsPage = () => {
   
     useEffect(() => {
       loadProjects();
-    }, [loadProjects]); // ⬅️ Trigger when loadProjects changes
+    }, [loadProjects]);
   
     const handleSortChange = (sortModel) => {
       if (sortModel.length > 0) {
@@ -141,7 +141,7 @@ const InternalProjectsPage = () => {
           setPage={setPage}
           rowCount={rowCount}
           handleEditProject={handleEditProject}
-          handleSortChange={handleSortChange} // 👈 Added this
+          handleSortChange={handleSortChange}
         />
       </Box>
 

@@ -33,7 +33,7 @@ const ProjectTable = ({ rows, columns, pageSize, setPageSize, page, setPage, row
         }}
         sortingMode="server"
         onSortModelChange={(sortModel) => {
-          handleSortChange(sortModel);   // ✅ call parent to update sorting state
+          handleSortChange(sortModel);  
         }}
         disableSelectionOnClick
         disableColumnMenu
