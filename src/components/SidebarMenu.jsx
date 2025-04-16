@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   Drawer, Box, Typography, Divider, List, ListItem, ListItemButton,
@@ -16,6 +16,8 @@ import {
   KeyboardArrowDown as ExpandMoreIcon,
   KeyboardArrowRight as ChevronRightIcon
 } from '@mui/icons-material';
+import LoginModal from '../auth/LoginModal';
+import { useAuth } from '../auth/AuthContext';
 
 const SidebarMenu = ({
   drawerWidth,
@@ -25,6 +27,9 @@ const SidebarMenu = ({
   openApprovals, setOpenApprovals,
   openAdmin, setOpenAdmin,
 }) => {
+  const { user, logout } = useAuth();
+  const [openLogin, setOpenLogin] = useState(false);
+
   return (
     <Drawer
       variant="permanent"
@@ -178,13 +183,19 @@ const SidebarMenu = ({
           <ListItemButton sx={{ borderRadius: 1 }}>
             <ListItemIcon><PersonIcon /></ListItemIcon>
             <ListItemText
-              primary="Kaustubh Gupta"
-              secondary="kaustubh@jman.io"
+              primary={user ? user.username : 'Guest'}
+              secondary={user ? (
+                <span onClick={logout} style={{ cursor: 'pointer', color: 'red' }}>Logout</span>
+              ) : (
+                <span onClick={() => setOpenLogin(true)} style={{ cursor: 'pointer', color: 'blue' }}>Login</span>
+              )}
               primaryTypographyProps={{ fontWeight: 'bold', variant: 'body2' }}
               secondaryTypographyProps={{ variant: 'caption' }}
             />
           </ListItemButton>
         </ListItem>
+            
+        <LoginModal open={openLogin} handleClose={() => setOpenLogin(false)} />
       </Box>
     </Drawer>
   );

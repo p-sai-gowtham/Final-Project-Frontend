@@ -3,6 +3,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import SidebarMenu from './components/SidebarMenu';
 import ProjectsPage from './pages/ProjectsPage'; 
 import InternalProjectsPage from './pages/InternalProjectsPage';
+import ProtectedRoute from './auth/ProtectedRoute';
+import { AuthProvider } from './auth/AuthContext';
 
 const App = () => {
   const drawerWidth = 240;
@@ -12,6 +14,8 @@ const App = () => {
   const [openApprovals, setOpenApprovals] = useState(false);
   const [openAdmin, setOpenAdmin] = useState(false);
   return (
+    
+  <AuthProvider>
     <Router>
       <div style={{ display: 'flex' }}>
         <SidebarMenu
@@ -29,12 +33,27 @@ const App = () => {
       />
         <div style={{ flexGrow: 1, padding: 24, background: '#f5f5f7', height: '100vh' }}>
           <Routes>
-            <Route path="/projects" element={<ProjectsPage />} />
-            <Route path="/projects/internal" element={<InternalProjectsPage />} />
+            <Route
+              path="/projects"
+              element={
+                <ProtectedRoute>
+                  <ProjectsPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/projects/internal"
+              element={
+                <ProtectedRoute>
+                  <InternalProjectsPage />
+                </ProtectedRoute>
+              }
+            />
           </Routes>
         </div>
       </div>
-    </Router>
+      </Router>
+  </AuthProvider>
   );
 };
 
