@@ -4,6 +4,8 @@ import { DataGrid } from '@mui/x-data-grid';
 import { Edit as EditIcon } from '@mui/icons-material';
 
 const ProjectTable = ({ rows, columns, pageSize, setPageSize, page, setPage, rowCount, handleEditProject, handleSortChange }) => {
+
+  // to the existing columns it will add edit column 
   const customColumns = columns.map(col =>
     col.field === 'action'
       ? {

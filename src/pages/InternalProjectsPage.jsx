@@ -13,45 +13,49 @@ import { useNavigate } from 'react-router-dom'
 const InternalProjectsPage = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
+
+  // if the user is not the admin it will not allow the user to access this page and it will sends it to the home page
   if (user.is_admin === false) {
     navigate('/');
   }
   const [page, setPage] = useState(0);
-    const [pageSize, setPageSize] = useState(10);
-    const [rows, setRows] = useState([]);
-    const [rowCount, setRowCount] = useState(0);
-    const [errorMessage, setErrorMessage] = useState('');
-  
-    const [sortField, setSortField] = useState('');
-    const [sortOrder, setSortOrder] = useState('');
-  
-    const [openAddModal, setOpenAddModal] = useState(false);
-    const [newProject, setNewProject] = useState({ name: '', client: '', startDate: '', endDate: '', type: 'Client Project', status: 'ACTIVE' });
-    const [openEditModal, setOpenEditModal] = useState(false);
-    const [editingProject, setEditingProject] = useState(null);
+  const [pageSize, setPageSize] = useState(10);
+  const [rows, setRows] = useState([]);
+  const [rowCount, setRowCount] = useState(0);
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const [sortField, setSortField] = useState('');
+  const [sortOrder, setSortOrder] = useState('');
+
+  const [openAddModal, setOpenAddModal] = useState(false);
+  const [newProject, setNewProject] = useState({ name: '', client: '', startDate: '', endDate: '', type: 'Client Project', status: 'ACTIVE' });
+  const [openEditModal, setOpenEditModal] = useState(false);
+  const [editingProject, setEditingProject] = useState(null);
   
   const [statusFilter, setStatusFilter] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   
-    const loadProjects = React.useCallback(() => {
-    const offset = page * pageSize;
-    fetchProjects(pageSize, offset, sortField, sortOrder, searchTerm, "Internal Project", statusFilter)
-      .then((res) => {
-        const mappedProjects = res.data.results.map(project => ({
-          ...project,
-          startDate: project.start_date,
-          endDate: project.end_date,
-        }));
-        setRows(mappedProjects);
-        setRowCount(res.data.count);
-      })
-      .catch(() => setErrorMessage('Failed to fetch projects.'));
+  // it will lodes onlu the internal projects adding to that it will change the rows with respective to the the amount of rows per page, page number, the order of the which it needs to show and filter the data according to the term and status of the project
+  const loadProjects = React.useCallback(() => {
+  const offset = page * pageSize;
+  fetchProjects(pageSize, offset, sortField, sortOrder, searchTerm, "Internal Project", statusFilter)
+    .then((res) => {
+      const mappedProjects = res.data.results.map(project => ({
+        ...project,
+        startDate: project.start_date,
+        endDate: project.end_date,
+      }));
+      setRows(mappedProjects);
+      setRowCount(res.data.count);
+    })
+    .catch(() => setErrorMessage('Failed to fetch projects.'));
   }, [page, pageSize, sortField, sortOrder, searchTerm, statusFilter]);
   
     useEffect(() => {
       loadProjects();
     }, [loadProjects]);
   
+  // sorts the selected column
     const handleSortChange = (sortModel) => {
       if (sortModel.length > 0) {
         setSortField(sortModel[0].field);
@@ -62,6 +66,7 @@ const InternalProjectsPage = () => {
       }
     };
   
+  // creats a new project
     const handleAddProject = () => {
       const tempId = Date.now();
       const optimisticProject = { id: tempId, ...newProject };
@@ -89,6 +94,7 @@ const InternalProjectsPage = () => {
       setNewProject({ name: '', client: '', startDate: '', endDate: '', type: 'Client Project', status: 'ACTIVE' });
     };
   
+  // edit the project
     const handleEditProject = (project) => {
       setEditingProject({
         ...project,

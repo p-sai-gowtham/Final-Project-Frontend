@@ -7,6 +7,7 @@ const LoginModal = ({ open, handleClose }) => {
   const { login } = useAuth();
   const [credentials, setCredentials] = useState({ username: '', password: '' });
 
+  // sends th creds to the backend and if the creds are true it will loges the user else throws an errro
   const handleSubmit = async () => {
     try {
       const res = await axios.post('http://127.0.0.1:8000/api/auth/login/', credentials);

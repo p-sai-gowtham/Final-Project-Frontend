@@ -26,6 +26,8 @@ const ProjectsPage = () => {
 const [statusFilter, setStatusFilter] = useState("");
 const [searchTerm, setSearchTerm] = useState("");
 
+  // it will lodes onlu the internal projects adding to that it will change the rows with respective to the the amount of rows per page, page number, the order of the which it needs to show and filter the data according to the term and status of the project
+  
   const loadProjects = React.useCallback(() => {
   const offset = page * pageSize;
   fetchProjects(pageSize, offset, sortField, sortOrder, searchTerm, typeFilter, statusFilter) 
@@ -45,6 +47,7 @@ const [searchTerm, setSearchTerm] = useState("");
     loadProjects();
   }, [loadProjects]);
 
+  // sorts the selected column
   const handleSortChange = (sortModel) => {
     if (sortModel.length > 0) {
       setSortField(sortModel[0].field);
@@ -55,6 +58,7 @@ const [searchTerm, setSearchTerm] = useState("");
     }
   };
 
+  // creats a new project
   const handleAddProject = () => {
     const tempId = Date.now();
     const optimisticProject = { id: tempId, ...newProject };
@@ -82,6 +86,7 @@ const [searchTerm, setSearchTerm] = useState("");
     setNewProject({ name: '', client: '', startDate: '', endDate: '', type: 'Client Project', status: 'ACTIVE' });
   };
 
+  // edit the project
   const handleEditProject = (project) => {
     setEditingProject({
       ...project,
