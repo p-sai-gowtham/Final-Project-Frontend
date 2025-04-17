@@ -10,12 +10,13 @@ export const AuthProvider = ({ children }) => {
   const login = (accessToken) => {
     saveToken(accessToken);
     const decoded = jwtDecode(accessToken);
-    setUser({ username: decoded.username || decoded.user_id });
+    setUser({ username: decoded.username || decoded.user_id, is_admin:decoded.is_staff });
   };
 
   const logout = () => {
     removeToken();
     setUser(null);
+
   };
 
   useEffect(() => {
@@ -23,7 +24,7 @@ export const AuthProvider = ({ children }) => {
     if (token) {
       try {
         const decoded = jwtDecode(token);
-        setUser({ username: decoded.username || decoded.user_id });
+        setUser({ username: decoded.username || decoded.user_id, is_admin:decoded.is_staff });
       } catch {
         logout();
       }

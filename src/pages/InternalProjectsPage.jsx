@@ -7,8 +7,15 @@ import ProjectAddModal from '../components/ProjectAddModal';
 import ProjectEditModal from '../components/ProjectEditModal';
 import { fetchProjects, addProject, editProject } from '../api';
 import { Snackbar, Alert } from '@mui/material';
+import { useAuth } from '../auth/AuthContext';
+import { useNavigate } from 'react-router-dom'
 
 const InternalProjectsPage = () => {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+  if (user.is_admin === false) {
+    navigate('/');
+  }
   const [page, setPage] = useState(0);
     const [pageSize, setPageSize] = useState(10);
     const [rows, setRows] = useState([]);

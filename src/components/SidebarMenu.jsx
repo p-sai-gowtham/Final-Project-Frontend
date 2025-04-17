@@ -196,7 +196,7 @@ const SidebarMenu = ({
           <ListItemButton sx={{ borderRadius: 1 }}>
             <ListItemIcon><PersonIcon /></ListItemIcon>
             <ListItemText
-              primary={user ? user.username : 'Guest'}
+              primary={user ? user.username : ''}
               secondary={user ? (
                 <span onClick={logout} style={{ cursor: 'pointer', color: 'red' }}>Logout</span>
               ) : (
