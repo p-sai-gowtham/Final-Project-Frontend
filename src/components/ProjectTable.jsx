@@ -18,7 +18,16 @@ const ProjectTable = ({ rows, columns, pageSize, setPageSize, page, setPage, row
   );
 
   return (
-    <Paper sx={{ height: 'calc(100vh - 200px)', width: '100%' }}>
+    <Paper  sx={{
+    height: '100%',
+    width: '100%',
+    maxWidth: '100%',
+    overflowX: 'auto',
+    '@media (max-width: 768px)': {
+      '& .MuiDataGrid-columnHeaders': { fontSize: '12px' },
+      '& .MuiDataGrid-cell': { fontSize: '12px' },
+    },
+  }}>
       <DataGrid
         rows={rows}
         columns={customColumns}
@@ -42,6 +51,7 @@ const ProjectTable = ({ rows, columns, pageSize, setPageSize, page, setPage, row
           '& .MuiDataGrid-cell': { borderBottom: '1px solid #E0E0E0' },
           '& .MuiDataGrid-row:hover': { backgroundColor: '#F5F5F5' },
           border: 'none',
+          minWidth: '600px',
         }}
       />
     </Paper>

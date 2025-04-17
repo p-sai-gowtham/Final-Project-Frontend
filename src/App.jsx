@@ -5,6 +5,8 @@ import ProjectsPage from './pages/ProjectsPage';
 import InternalProjectsPage from './pages/InternalProjectsPage';
 import ProtectedRoute from './auth/ProtectedRoute';
 import { AuthProvider } from './auth/AuthContext';
+import useWindowSize from './hooks/useWindowSize';
+import { Box } from '@mui/material';
 
 const App = () => {
   const drawerWidth = 240;
@@ -13,6 +15,15 @@ const App = () => {
   const [openPerformanceEdge, setOpenPerformanceEdge] = useState(false);
   const [openApprovals, setOpenApprovals] = useState(false);
   const [openAdmin, setOpenAdmin] = useState(false);
+  const windowSize = useWindowSize();
+  const isMobile = windowSize.width <= 768;
+
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const toggleDrawer = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
   return (
     
   <AuthProvider>
@@ -30,8 +41,19 @@ const App = () => {
         setOpenApprovals={setOpenApprovals}
         openAdmin={openAdmin}
         setOpenAdmin={setOpenAdmin}
+        mobileOpen={mobileOpen}
+        toggleDrawer={toggleDrawer}
+        isMobile={isMobile}
       />
-        <div style={{ flexGrow: 1, padding: 24, background: '#f5f5f7', height: '100vh' }}>
+        <Box
+          sx={{
+            flexGrow: 1,
+            p: 2,
+            background: '#f5f5f7',
+            height: '100vh',
+            overflow: 'auto',
+          }}
+        >
           <Routes>
             <Route
               path="/projects"
@@ -50,7 +72,7 @@ const App = () => {
               }
             />
           </Routes>
-        </div>
+        </Box>
       </div>
       </Router>
   </AuthProvider>
@@ -58,3 +80,6 @@ const App = () => {
 };
 
 export default App;
+
+
+

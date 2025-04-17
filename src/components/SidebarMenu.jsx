@@ -18,6 +18,8 @@ import {
 } from '@mui/icons-material';
 import LoginModal from '../auth/LoginModal';
 import { useAuth } from '../auth/AuthContext';
+import { IconButton } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
 
 const SidebarMenu = ({
   drawerWidth,
@@ -25,24 +27,35 @@ const SidebarMenu = ({
   openProjects, setOpenProjects,
   openPerformanceEdge, setOpenPerformanceEdge,
   openApprovals, setOpenApprovals,
-  openAdmin, setOpenAdmin,
+  openAdmin, setOpenAdmin, isMobile, mobileOpen, toggleDrawer
 }) => {
   const { user, logout } = useAuth();
   const [openLogin, setOpenLogin] = useState(false);
 
   return (
+  <>
+    {isMobile && (
+        <IconButton onClick={toggleDrawer} sx={{ position: 'absolute', top: 16, left: 16, zIndex: 2000 }}>
+          <MenuIcon />
+        </IconButton>
+      )
+    }
     <Drawer
-      variant="permanent"
+        variant={isMobile ? 'temporary' : 'permanent'}
+        open={isMobile ? mobileOpen : true}
+        onClose={toggleDrawer}
+        ModalProps={{ keepMounted: true }}
       sx={{
-        width: drawerWidth,
-        flexShrink: 0,
-        '& .MuiDrawer-paper': {
           width: drawerWidth,
-          boxSizing: 'border-box',
-          borderRight: '1px solid #E0E0E0',
-          bgcolor: '#F5F5F7',
-        },
-      }}
+          flexShrink: 0,
+          '& .MuiDrawer-paper': {
+            width: drawerWidth,
+            boxSizing: 'border-box',
+            borderRight: '1px solid #E0E0E0',
+            bgcolor: '#F5F5F7',
+          },
+        }}
+
     >
       <Box sx={{ p: 2 }}>
         <Typography variant="h6" sx={{ fontWeight: 'bold', color: '#333366' }}>
@@ -197,7 +210,8 @@ const SidebarMenu = ({
             
         <LoginModal open={openLogin} handleClose={() => setOpenLogin(false)} />
       </Box>
-    </Drawer>
+      </Drawer>
+    </>
   );
 };
 
